@@ -38,6 +38,7 @@
         <activity
             android:name=".ui.AddPlantActivity"
             android:label="@string/title_activity_add_plant" />
+    <service android:name=".PlantWateringService"/>
     </application>
 
 </manifest>
