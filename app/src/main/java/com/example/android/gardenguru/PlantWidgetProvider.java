@@ -14,18 +14,16 @@ import com.example.android.gardenguru.ui.MainActivity;
  */
 public class PlantWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,int imgRes,int appWidgetId) {
 // Create an Intent to launch MainActivity when clicked
         Intent intent=new Intent(context, MainActivity.class);
         PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
 
-      //  CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_provider);
-        //views.setTextViewText(R.id.appwidget_text, widgetText);
-
         views.setOnClickPendingIntent(R.id.plant_widget_image,pendingIntent);
+        //Update image
+        views.setImageViewResource(R.id.plant_widget_image,imgRes);
         //FOR ADDING WATER SERVICING CLICK HANDLER for running the background watering service
 Intent wateringIntent=new Intent(context,PlantWateringService.class);
 wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
@@ -38,8 +36,12 @@ views.setOnClickPendingIntent(R.id.widget_water_button,pendingWaterIntentService
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+        PlantWateringService.startActivityUpdatePlantWidget(context);
+    }
+    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
+                                          int imgRes, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+            updateAppWidget(context, appWidgetManager, imgRes, appWidgetId);
         }
     }
 

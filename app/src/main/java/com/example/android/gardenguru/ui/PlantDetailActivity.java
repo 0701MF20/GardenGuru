@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import com.example.android.gardenguru.PlantWateringService;
 import com.example.android.gardenguru.R;
 import com.example.android.gardenguru.provider.PlantContract;
 import com.example.android.gardenguru.utils.PlantUtils;
@@ -57,6 +58,7 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
         getContentResolver().update(SINGLE_PLANT_URI, contentValues, null, null);
         cursor.close();
+        PlantWateringService.startActivityUpdatePlantWidget(this);
     }
 
     @Override
@@ -115,5 +117,6 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
     Intent i4=new Intent(this,MainActivity.class);
     startActivity(i4);
     finish();
+    PlantWateringService.startActivityUpdatePlantWidget(this);
     }
 }
