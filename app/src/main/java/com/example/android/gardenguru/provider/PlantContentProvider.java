@@ -10,10 +10,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static com.example.android.gardenguru.provider.PlantContract.PlantEntry;
-
-
 public class PlantContentProvider extends ContentProvider {
 
     // Define final integer constants for the directory of plants and a single item.

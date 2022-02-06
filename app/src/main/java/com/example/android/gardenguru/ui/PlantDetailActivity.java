@@ -36,7 +36,7 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
        // finish();
         Intent i=new Intent(this,MainActivity.class);
         startActivity(i);
-       // finish();
+    finish();
     }
 
     public void onWaterButtonClick(View view) {
@@ -114,5 +114,6 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
         getContentResolver().delete(SINGLE_PLANT_URI,null,null);
     Intent i4=new Intent(this,MainActivity.class);
     startActivity(i4);
+    finish();
     }
 }

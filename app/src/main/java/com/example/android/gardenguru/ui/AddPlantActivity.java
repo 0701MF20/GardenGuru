@@ -54,5 +54,6 @@ public class AddPlantActivity extends AppCompatActivity {
     public void onBackButtonClick(View view) {
         Intent i2=new Intent(this,MainActivity.class);
         startActivity(i2);
+    finish();
     }
 }
