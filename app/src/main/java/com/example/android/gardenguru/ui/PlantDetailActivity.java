@@ -1,12 +1,10 @@
 package com.example.android.gardenguru.ui;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.support.v4.content.CursorLoader;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,12 +17,10 @@ import com.example.android.gardenguru.provider.PlantContract;
 import com.example.android.gardenguru.utils.PlantUtils;
 import static com.example.android.gardenguru.provider.PlantContract.BASE_CONTENT_URI;
 import static com.example.android.gardenguru.provider.PlantContract.PATH_PLANTS;
-
-public class PlantDetailActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+public class PlantDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int SINGLE_LOADER_ID = 200;
-    public static final String EXTRA_PLANT_ID = "com.example.android.mygarden.extra.PLANT_ID";
+    public static final String EXTRA_PLANT_ID = "com.example.android.gardenguru.extra.PLANT_ID";
     long mPlantId;
 
     @Override
@@ -37,7 +33,10 @@ public class PlantDetailActivity extends AppCompatActivity
     }
 
     public void onBackButtonClick(View view) {
-        finish();
+       // finish();
+        Intent i=new Intent(this,MainActivity.class);
+        startActivity(i);
+       // finish();
     }
 
     public void onWaterButtonClick(View view) {
@@ -111,9 +110,9 @@ public class PlantDetailActivity extends AppCompatActivity
     }
 
     public void onCutButtonClick(View view) {
-        Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), mPlantId);
-        getContentResolver().delete(SINGLE_PLANT_URI, null, null);
-        finish();
+        Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), mPlantId);
+        getContentResolver().delete(SINGLE_PLANT_URI,null,null);
+    Intent i4=new Intent(this,MainActivity.class);
+    startActivity(i4);
     }
 }

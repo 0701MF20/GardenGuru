@@ -1,5 +1,6 @@
 package com.example.android.gardenguru.ui;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,11 +47,12 @@ public class AddPlantActivity extends AppCompatActivity {
         contentValues.put(PlantContract.PlantEntry.COLUMN_CREATION_TIME, timeNow);
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
         getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);
-        // Close this activity
-        finish();
+        Intent i3=new Intent(this,MainActivity.class);
+        startActivity(i3);
     }
 
     public void onBackButtonClick(View view) {
-        finish();
+        Intent i2=new Intent(this,MainActivity.class);
+        startActivity(i2);
     }
 }

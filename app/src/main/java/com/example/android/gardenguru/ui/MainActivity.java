@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new PlantListAdapter(this, null);
         mGardenRecyclerView.setAdapter(mAdapter);
 
-        getSupportLoaderManager().initLoader(GARDEN_LOADER_ID, null, this);
+        LoaderManager.getInstance(this).initLoader(GARDEN_LOADER_ID, null, this);
     }
 
     @Override
