@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.gardenguru.PlantWateringService;
 import com.example.android.gardenguru.R;
 import com.example.android.gardenguru.provider.PlantContract;
 
@@ -47,6 +49,7 @@ public class AddPlantActivity extends AppCompatActivity {
         contentValues.put(PlantContract.PlantEntry.COLUMN_CREATION_TIME, timeNow);
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
         getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);
+        PlantWateringService.startActionUpdatePlantWidgets(this);
         Intent i3=new Intent(this,MainActivity.class);
         startActivity(i3);
     }
