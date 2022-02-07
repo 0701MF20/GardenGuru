@@ -19,9 +19,10 @@ public class PlantWidgetProvider extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_provider);
-        views.setOnClickPendingIntent(R.id.plant_widget_image,pendingIntent);
         //Update image
         views.setImageViewResource(R.id.plant_widget_image,imgRes);
+        // Widgets allow click handlers to only launch pending intents
+        views.setOnClickPendingIntent(R.id.plant_widget_image,pendingIntent);
         //FOR ADDING WATER SERVICING CLICK HANDLER for running the background watering service
 Intent wateringIntent=new Intent(context,PlantWateringService.class);
 wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
@@ -34,7 +35,7 @@ views.setOnClickPendingIntent(R.id.widget_water_button,pendingWaterIntentService
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        PlantWateringService.startActivityUpdatePlantWidget(context);
+        PlantWateringService.startActionUpdatePlantWidget(context);
     }
     public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
                                           int imgRes, int[] appWidgetIds) {

@@ -17,7 +17,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/plant_widget_provider_info" />
         </receiver>
-
+        <service android:name=".PlantWateringService"/>
         <provider
             android:name=".provider.PlantContentProvider"
             android:authorities="com.example.android.gardenguru"
@@ -38,7 +38,6 @@
         <activity
             android:name=".ui.AddPlantActivity"
             android:label="@string/title_activity_add_plant" />
-    <service android:name=".PlantWateringService"/>
     </application>
 
 </manifest>

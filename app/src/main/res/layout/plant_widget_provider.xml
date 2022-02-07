@@ -1,26 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/appWidgetBackgroundColor"
-    android:padding="@dimen/widget_margin"
-    android:theme="@style/ThemeOverlay.GardenGuru.AppWidgetContainer">
+    android:orientation="vertical">
 
    <ImageView
        android:id="@+id/widget_water_button"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
        android:layout_gravity="center_horizontal"
-       android:src="@drawable/water_drop_blue"
-       android:contentDescription="Watering"
-       tools:ignore="HardcodedText" />
+       android:src="@drawable/water_drop_blue" />
     <ImageView
-        android:contentDescription="Widget Screen"
-        tools:ignore="HardcodedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/grass"
         android:id="@+id/plant_widget_image"
         />
-</RelativeLayout>
+</LinearLayout>

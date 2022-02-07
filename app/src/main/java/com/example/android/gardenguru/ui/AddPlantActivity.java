@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.gardenguru.PlantWateringService;
-import com.example.android.gardenguru.PlantWidgetProvider;
 import com.example.android.gardenguru.R;
 import com.example.android.gardenguru.provider.PlantContract;
 
@@ -52,7 +51,8 @@ public class AddPlantActivity extends AppCompatActivity {
         getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);
         Intent i3=new Intent(this,MainActivity.class);
         startActivity(i3);
-        PlantWateringService.startActivityUpdatePlantWidget(this);
+        PlantWateringService.startActionUpdatePlantWidget(this);
+    finish();
     }
 
     public void onBackButtonClick(View view) {

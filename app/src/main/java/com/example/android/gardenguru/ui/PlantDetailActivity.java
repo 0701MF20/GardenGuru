@@ -58,7 +58,7 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
         contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
         getContentResolver().update(SINGLE_PLANT_URI, contentValues, null, null);
         cursor.close();
-        PlantWateringService.startActivityUpdatePlantWidget(this);
+        PlantWateringService.startActionUpdatePlantWidget(this);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
         getContentResolver().delete(SINGLE_PLANT_URI,null,null);
     Intent i4=new Intent(this,MainActivity.class);
     startActivity(i4);
-    PlantWateringService.startActivityUpdatePlantWidget(this);
+    PlantWateringService.startActionUpdatePlantWidget(this);
         finish();
     }
 }

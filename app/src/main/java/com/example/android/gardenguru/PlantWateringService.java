@@ -29,13 +29,13 @@ public class PlantWateringService extends IntentService {
     public PlantWateringService() {
         super("PlantWateringSystem");
     }
-    public static void  startActivityUpdatePlantWidget(Context context)
+    public static void  startActionUpdatePlantWidget(Context context)
     {
         Intent intent=new Intent(context,PlantWateringService.class);
         intent.setAction(ACTION_WATER_PLANTS);
         context.startService(intent);
     }
-    public static void  startActivityWaterPlant(Context context)
+    public static void  startActionWaterPlant(Context context)
     {
         Intent intent=new Intent(context,PlantWateringService.class);
         intent.setAction(ACTION_WATER_PLANTS);
