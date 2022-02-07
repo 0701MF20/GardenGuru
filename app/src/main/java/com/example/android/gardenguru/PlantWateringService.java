@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 public class PlantWateringService extends IntentService {
 
     public static final String ACTION_WATER_PLANTS = "com.example.android.garden.action.water_plants";
+    public static final String ACTION_UPDATE_PLANT_WIDGETS = "com.example.android.mygarden.action.update_plant_widgets";
     public PlantWateringService() {
         super("PlantWateringSystem");
     }

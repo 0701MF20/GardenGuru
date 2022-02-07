@@ -13,11 +13,9 @@
        android:layout_height="wrap_content"
        android:layout_gravity="center_horizontal"
        android:src="@drawable/water_drop_blue"
-       android:contentDescription="Watering"
-       tools:ignore="HardcodedText" />
+       />
     <ImageView
         android:contentDescription="Widget Screen"
-        tools:ignore="HardcodedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
