@@ -17,20 +17,34 @@ public class PlantWidgetProvider extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 // Create an Intent to launch MainActivity when clicked
-        Intent intent=new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
-
-      //  CharSequence widgetText = context.getString(R.string.appwidget_text);
+//        Intent intent=new Intent(context, MainActivity.class);
+//        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
+//
+//      //  CharSequence widgetText = context.getString(R.string.appwidget_text);
+//        // Construct the RemoteViews object
+//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_provider);
+//        //views.setTextViewText(R.id.appwidget_text, widgetText);
+//
+//        views.setOnClickPendingIntent(R.id.plant_widget_image,pendingIntent);
+//        //FOR ADDING WATER SERVICING CLICK HANDLER for running the background watering service
+//Intent wateringIntent=new Intent(context,PlantWateringService.class);
+//wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
+//PendingIntent pendingWaterIntentService=PendingIntent.getService(context,0,wateringIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+//views.setOnClickPendingIntent(R.id.widget_water_button,pendingWaterIntentService);
+        // Instruct the widget manager to update the widget
+//        appWidgetManager.updateAppWidget(appWidgetId, views);
+        // Create an Intent to launch MainActivity when clicked
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_provider);
-        //views.setTextViewText(R.id.appwidget_text, widgetText);
-
-        views.setOnClickPendingIntent(R.id.plant_widget_image,pendingIntent);
-        //FOR ADDING WATER SERVICING CLICK HANDLER for running the background watering service
-Intent wateringIntent=new Intent(context,PlantWateringService.class);
-wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
-PendingIntent pendingWaterIntentService=PendingIntent.getService(context,0,wateringIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-views.setOnClickPendingIntent(R.id.widget_water_button,pendingWaterIntentService);
+        // Widgets allow click handlers to only launch pending intents
+        views.setOnClickPendingIntent(R.id.plant_widget_image, pendingIntent);
+        // Add the wateringservice click handler
+        Intent wateringIntent = new Intent(context, PlantWateringService.class);
+        wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
+        PendingIntent wateringPendingIntent = PendingIntent.getService(context, 0, wateringIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.widget_water_button, wateringPendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
