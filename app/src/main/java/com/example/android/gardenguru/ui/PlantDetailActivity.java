@@ -119,5 +119,6 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
     startActivity(i4);
         PlantWateringService.startActionUpdatePlantWidgets(this);
     finish();
+
     }
 }
