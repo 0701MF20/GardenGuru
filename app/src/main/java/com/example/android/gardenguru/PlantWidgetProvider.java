@@ -14,7 +14,7 @@ import com.example.android.gardenguru.ui.MainActivity;
  */
 public class PlantWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,int imgRes,int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,long plantId,int imgRes,int appWidgetId) {
 
         // Create an Intent to launch MainActivity when clicked
         Intent intent = new Intent(context, MainActivity.class);
@@ -27,7 +27,9 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.plant_widget_image, pendingIntent);
         // Add the wateringservice click handler
         Intent wateringIntent = new Intent(context, PlantWateringService.class);
-        wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
+        wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANT);
+        //setting the id of plant in which we need to water
+        wateringIntent.putExtra(PlantWateringService.EXTRA_PLANT_ID,plantId);
         PendingIntent wateringPendingIntent = PendingIntent.getService(context, 0, wateringIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widget_water_button, wateringPendingIntent);
         // Instruct the widget manager to update the widget
@@ -40,9 +42,9 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         PlantWateringService.startActionUpdatePlantWidgets(context);
     }
     public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
-                                          int imgRes, int[] appWidgetIds) {
+                                          int imgRes, int[] appWidgetIds,long plantId) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, imgRes, appWidgetId);
+            updateAppWidget(context, appWidgetManager,plantId,imgRes, appWidgetId);
         }
     }
 
