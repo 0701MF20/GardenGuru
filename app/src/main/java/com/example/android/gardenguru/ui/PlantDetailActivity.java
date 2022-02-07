@@ -116,7 +116,7 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
         getContentResolver().delete(SINGLE_PLANT_URI,null,null);
     Intent i4=new Intent(this,MainActivity.class);
     startActivity(i4);
-    finish();
     PlantWateringService.startActivityUpdatePlantWidget(this);
+        finish();
     }
 }
