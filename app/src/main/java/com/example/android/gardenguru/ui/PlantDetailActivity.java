@@ -42,24 +42,25 @@ public class PlantDetailActivity extends AppCompatActivity implements LoaderMana
     }
 
     public void onWaterButtonClick(View view) {
-        //check if already dead then can't water
-        Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), mPlantId);
-        Cursor cursor = getContentResolver().query(SINGLE_PLANT_URI, null, null, null, null);
-        if (cursor == null || cursor.getCount() < 1) return; //can't find this plant!
-        cursor.moveToFirst();
-      long lastWatered=cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME);
-       // long lastWatered = cursor.getLong(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME));
-        long timeNow = System.currentTimeMillis();
-        if ((timeNow - lastWatered) > PlantUtils.MAX_AGE_WITHOUT_WATER)
-            return; // plant already dead
-
-        ContentValues contentValues = new ContentValues();
-        // Update the watered timestamp
-        contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
-        getContentResolver().update(SINGLE_PLANT_URI, contentValues, null, null);
-        cursor.close();
-        PlantWateringService.startActionUpdatePlantWidgets(this);
+//        //check if already dead then can't water
+//        Uri SINGLE_PLANT_URI = ContentUris.withAppendedId(
+//                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build(), mPlantId);
+//        Cursor cursor = getContentResolver().query(SINGLE_PLANT_URI, null, null, null, null);
+//        if (cursor == null || cursor.getCount() < 1) return; //can't find this plant!
+//        cursor.moveToFirst();
+//      long lastWatered=cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME);
+//       // long lastWatered = cursor.getLong(cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME));
+//        long timeNow = System.currentTimeMillis();
+//        if ((timeNow - lastWatered) > PlantUtils.MAX_AGE_WITHOUT_WATER)
+//            return; // plant already dead
+//
+//        ContentValues contentValues = new ContentValues();
+//        // Update the watered timestamp
+//        contentValues.put(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME, timeNow);
+//        getContentResolver().update(SINGLE_PLANT_URI, contentValues, null, null);
+//        cursor.close();
+//        PlantWateringService.startActionUpdatePlantWidgets(this);
+        PlantWateringService.startActionWaterPlant(this,mPlantId);
     }
 
     @Override

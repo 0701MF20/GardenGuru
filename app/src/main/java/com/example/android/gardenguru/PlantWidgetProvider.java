@@ -5,25 +5,46 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
+import com.example.android.gardenguru.provider.PlantContract;
 import com.example.android.gardenguru.ui.MainActivity;
+import com.example.android.gardenguru.ui.PlantDetailActivity;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class PlantWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,long plantId,int imgRes,int appWidgetId) {
-
-        // Create an Intent to launch MainActivity when clicked
-        Intent intent = new Intent(context, MainActivity.class);
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,long plantId,int imgRes,int appWidgetId,boolean waterYes) {
+        Intent intent;
+        if(plantId== PlantContract.INVALID_PLANT_ID) {
+            // Create an Intent to launch MainActivity when clicked
+            intent = new Intent(context, MainActivity.class);
+        }else
+        {
+            Log.d(PlantWidgetProvider.class.getSimpleName(), "plantId=" + plantId);
+            intent=new Intent(context, PlantDetailActivity.class);
+        intent.putExtra(PlantDetailActivity.EXTRA_PLANT_ID,plantId);
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget_provider);
         // Update image
         views.setImageViewResource(R.id.plant_widget_image, imgRes);
-        // Widgets allow click handlers to only launch pending intents
+        //Update Plant ID Text
+        views.setTextViewText(R.id.widget_plant_name,String.valueOf(plantId));
+        //To set the visibility  of button
+        if(waterYes)
+        {
+            views.setViewVisibility(R.id.widget_water_button, View.VISIBLE);
+        }
+        else
+        {
+            views.setViewVisibility(R.id.widget_water_button,View.VISIBLE);
+        } // Widgets allow click handlers to only launch pending intents
         views.setOnClickPendingIntent(R.id.plant_widget_image, pendingIntent);
         // Add the wateringservice click handler
         Intent wateringIntent = new Intent(context, PlantWateringService.class);
@@ -42,9 +63,9 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         PlantWateringService.startActionUpdatePlantWidgets(context);
     }
     public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
-                                          int imgRes, int[] appWidgetIds,long plantId) {
+                                          int imgRes, int[] appWidgetIds,long plantId,boolean waterYes) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager,plantId,imgRes, appWidgetId);
+            updateAppWidget(context, appWidgetManager,plantId,imgRes, appWidgetId,waterYes);
         }
     }
 

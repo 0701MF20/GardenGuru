@@ -82,10 +82,12 @@ if(intent!=null)
         );
         // Extract the plant details
         int imgRes = R.drawable.grass; // Default image in case our garden is empty
+        boolean canWater = false; // Default to hide the water drop button
         long plantId = INVALID_PLANT_ID;
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             int idIndex = cursor.getColumnIndex(PlantContract.PlantEntry._ID);
+            plantId=cursor.getLong(idIndex);
             int createTimeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_CREATION_TIME);
             int waterTimeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME);
             int plantTypeIndex = cursor.getColumnIndex(PlantContract.PlantEntry.COLUMN_PLANT_TYPE);
@@ -93,13 +95,14 @@ if(intent!=null)
             long wateredAt = cursor.getLong(waterTimeIndex);
             long createdAt = cursor.getLong(createTimeIndex);
             int plantType = cursor.getInt(plantTypeIndex);
-            plantId = cursor.getLong(idIndex);
             cursor.close();
+            canWater = (timeNow - wateredAt) > PlantUtils.MIN_AGE_BETWEEN_WATER &&
+                    (timeNow - wateredAt) < PlantUtils.MAX_AGE_WITHOUT_WATER;
             imgRes = PlantUtils.getPlantImageRes(this, timeNow - createdAt, timeNow - wateredAt, plantType);
         }
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PlantWidgetProvider.class));
         //Now update all widgets
-        PlantWidgetProvider.updatePlantWidgets(this, appWidgetManager,imgRes,appWidgetIds,plantId);
+        PlantWidgetProvider.updatePlantWidgets(this, appWidgetManager,imgRes,appWidgetIds,plantId,canWater);
     }
 }
