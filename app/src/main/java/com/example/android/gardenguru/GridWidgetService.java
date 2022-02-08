@@ -3,11 +3,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.android.gardenguru.provider.PlantContract;
+import com.example.android.gardenguru.ui.PlantDetailActivity;
 import com.example.android.gardenguru.utils.PlantUtils;
 
 public class GridWidgetService extends RemoteViewsService {
@@ -64,6 +66,12 @@ Cursor mCursor;
       views.setImageViewResource(R.id.plant_widget_image,imgRes);
        views.setTextViewText(R.id.widget_plant_name,String.valueOf(plantId));
         views.setViewVisibility(R.id.widget_water_button, View.GONE);
+            // Fill in the onClick PendingIntent Template using the specific plant Id for each item individually
+            Bundle extras = new Bundle();
+            extras.putLong(PlantDetailActivity.EXTRA_PLANT_ID, plantId);
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtras(extras);
+            views.setOnClickFillInIntent(R.id.widget_grid_view, fillInIntent);
        return views;
         }
 
