@@ -37,7 +37,18 @@ public class PlantWidgetProvider extends AppWidgetProvider {
     }
 
     private static RemoteViews getGardenGridRemoteView(Context context) {
-  return null;
+  RemoteViews views=new RemoteViews(context.getPackageName(),R.layout.widget_grid_view);
+
+  Intent intent=new Intent(context,GridWidgetService.class);
+  views.setRemoteAdapter(R.id.widget_grid_view,intent);
+
+  Intent appIntent=new Intent(context,PlantDetailActivity.class);
+  PendingIntent appPendingIntent=PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+  views.setPendingIntentTemplate(R.id.widget_grid_view,appPendingIntent);
+
+  views.setEmptyView(R.id.widget_grid_view,R.id.empty_view);
+
+  return views;
     }
 
     private static RemoteViews getSinglePlantRemoteView(Context context, int imgRes, long plantId, boolean waterYes) {
@@ -68,7 +79,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.widget_water_button,View.VISIBLE);
         } // Widgets allow click handlers to only launch pending intents
         views.setOnClickPendingIntent(R.id.plant_widget_image, pendingIntent);
-        // Add the wateringservice click handler
+        // Add the watering service click handler
         Intent wateringIntent = new Intent(context, PlantWateringService.class);
         wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANT);
         //setting the id of plant in which we need to water

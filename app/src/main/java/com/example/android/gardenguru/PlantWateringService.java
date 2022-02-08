@@ -102,7 +102,10 @@ if(intent!=null)
         }
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PlantWidgetProvider.class));
+        //this will call dataChange method in GRID WIDGETcLASS
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds,R.id.widget_grid_view);
         //Now update all widgets
         PlantWidgetProvider.updatePlantWidgets(this, appWidgetManager,imgRes,appWidgetIds,plantId,canWater);
+
     }
 }
