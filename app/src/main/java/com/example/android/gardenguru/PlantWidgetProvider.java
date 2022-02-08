@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -19,6 +20,27 @@ import com.example.android.gardenguru.ui.PlantDetailActivity;
 public class PlantWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,long plantId,int imgRes,int appWidgetId,boolean waterYes) {
+        //Getting widget bundle which have all information
+        Bundle options=appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int width=options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        RemoteViews views;
+        if(width<300)
+        {
+            views=getSinglePlantRemoteView(context,imgRes,plantId,waterYes);
+        }
+        else
+        {
+            views=getGardenGridRemoteView(context);
+        }
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    private static RemoteViews getGardenGridRemoteView(Context context) {
+  return null;
+    }
+
+    private static RemoteViews getSinglePlantRemoteView(Context context, int imgRes, long plantId, boolean waterYes) {
         Intent intent;
         if(plantId== PlantContract.INVALID_PLANT_ID) {
             // Create an Intent to launch MainActivity when clicked
@@ -27,7 +49,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         {
             Log.d(PlantWidgetProvider.class.getSimpleName(), "plantId=" + plantId);
             intent=new Intent(context, PlantDetailActivity.class);
-        intent.putExtra(PlantDetailActivity.EXTRA_PLANT_ID,plantId);
+            intent.putExtra(PlantDetailActivity.EXTRA_PLANT_ID,plantId);
         }
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
@@ -53,8 +75,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         wateringIntent.putExtra(PlantWateringService.EXTRA_PLANT_ID,plantId);
         PendingIntent wateringPendingIntent = PendingIntent.getService(context, 0, wateringIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widget_water_button, wateringPendingIntent);
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+    return views;
     }
 
     @Override
@@ -67,6 +88,12 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager,plantId,imgRes, appWidgetId,waterYes);
         }
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        PlantWateringService.startActionUpdatePlantWidgets(context);
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
     @Override
